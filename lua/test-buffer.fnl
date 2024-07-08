@@ -25,4 +25,6 @@
         (error (.. "Filetype " options.filetype " is not supported")))
     (setup-autocmd options)))
 
+(fn test)
+
 {: setup}
