@@ -7,20 +7,20 @@
   (print options.name))
 
 (fn setup-autocmd [options]
-  (local augroup (vim.api.nvim_create_augroup :TestBuffer {:clear true}))
-  (vim.api.nvim_create_autocmd :VimEnter
+  (local augroup (_G.vim.api.nvim_create_augroup :TestBuffer {:clear true}))
+  (_G.vim.api.nvim_create_autocmd :VimEnter
                                {:group augroup
                                 :desc "Set a fennel scratch buffer on load"
                                 :once true
                                 :callback (fn [] (set-plugin options))}))
 
 (fn setup [user_options]
-  (when (not (= (vim.fn.argc) 0))
-    (lua :return)) ; Return when the user used Nvim to open a file directly
+  (when (not (= (_G.vim.fn.argc) 0))
+    (lua :return)) ; Return when the user used N_G.vim to open a file directly
   (let [default_options {
                         :filetype :fennel
                         :name :default-name}
-        options (vim.tbl_extend :force default_options (or user_options {}))]
+        options (_G.vim.tbl_extend :force default_options (or user_options {}))]
     (if (= (. maps options.filetype) nil)
         (error (.. "Filetype " options.filetype " is not supported")))
     (setup-autocmd options)))
